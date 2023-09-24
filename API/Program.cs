@@ -16,12 +16,13 @@ namespace API
             });
              // Add services to the container.
             builder.Services.AddAuthorization();
-
+             //Add cros policy
+              builder.Services.AddCors();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
-
+    
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -33,6 +34,10 @@ namespace API
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
+            app.UseCors(response=>
+                          response.AllowAnyHeader()
+                                  .AllowAnyMethod()
+                                  .WithOrigins("http://localhost:4200"));
             app.MapControllers();
             app.Run();
         }
