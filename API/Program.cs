@@ -14,12 +14,13 @@ namespace API
             {
                 option.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-            // Add services to the container.
+             // Add services to the container.
             builder.Services.AddAuthorization();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
 
             var app = builder.Build();
 
@@ -31,14 +32,8 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-            var summaries = new[]
-            {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
+            app.MapControllers();
             app.Run();
         }
     }
