@@ -1,4 +1,7 @@
 
+using API.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace API
 {
     public class Program
@@ -7,6 +10,10 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<DataContext>(option =>
+            {
+                option.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
             // Add services to the container.
             builder.Services.AddAuthorization();
 
