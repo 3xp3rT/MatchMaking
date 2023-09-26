@@ -1,5 +1,6 @@
 
 using API.Data;
+using API.Extentions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -10,19 +11,13 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<DataContext>(option =>
-            {
-                option.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-             // Add services to the container.
-            builder.Services.AddAuthorization();
-             //Add cros policy
-              builder.Services.AddCors();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            
             builder.Services.AddControllers();
-    
+
+            builder.Services.AddApplicationServices(builder.Configuration);
+            builder.Services.AddIdentityServices(builder.Configuration);
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
